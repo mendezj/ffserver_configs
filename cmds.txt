@@ -1,1 +1,34 @@
+
+
+# Others
 ffmpeg -i yourvideo.mp4 -c:v libvpx -cpu-used 4 -threads 8 http://localhost:8090/streamwebm.ffm
+
+# removing audio from the stream
+ffmpeg -i input_file.mp4 -vcodec copy -an output_file.mp4
+
+# run ffserver in debug mode for syntax errors (-d flag)
+
+ffserver -f /etc/ffserver.conf  # no debug
+ffserver -d -f /etc/ffserver.conf # with debug flag
+
+Connecting input source with ffmpeg
+ffmpeg <inputs> <feed URL>
+ffmpeg -i /dev/video0 ...	# for whatever /dev/video0 is pointing to
+
+-s size
+-r frame rate
+-an disables the audio
+
+***************************************************************************
+# USING RTSP (Working)
+# This will start an rtsp server. when you pipe the video in, it starts streaming so the video must be long enough for you to open the stream in time
+# This will probably not matter in ongoing streams such as surveillance videos 
+
+# start the server
+./ffserver -f ~/myffserver/rtspserver.conf
+
+# pipe in the input
+./ffmpeg -i ~/Videos/output.avi -vcodec mpeg4 http://localhost:1234/feed1.ffm
+
+# open stream in vlc
+rtsp://127.0.0.1:1235/test1.sdp
