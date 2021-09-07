@@ -1,0 +1,1 @@
+ffmpeg -i yourvideo.mp4 -c:v libvpx -cpu-used 4 -threads 8 http://localhost:8090/streamwebm.ffm
